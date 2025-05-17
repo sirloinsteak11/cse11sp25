@@ -17,37 +17,42 @@ public class CardPayment extends Payment {
                              long cardNumber, int expiryMonth,
                              int expiryYear) {
 
-        this.transactionName = transactionName;
+        super(transactionName, amount);
+
+        this.cardNumber = cardNumber;
+        this.expiryMonth = expiryMonth;
+        this.expiryYear = expiryYear;
+
     }
 
     // TODO: Method header
     @Override
     public long getCardNumber() {
-        return 0;
+        return this.cardNumber;
     }
 
     // TODO: Method header
     @Override
     public int getExpiryMonth() {
-        return 0;
+        return this.expiryMonth;
     }
 
     // TODO: Method header
     @Override
     public int getExpiryYear() {
-        return 0;
+        return this.expiryYear;
     }
 
     // TODO: Method header
     @Override
     public String getHighLevelType() {
-        return null;
+        return HIGH_LEVEL_TYPE;
     }
 
     // TODO: Method header
     @Override
     public String getType() {
-        return null;
+        return TYPE;
     }
 
     // TODO: Method header
