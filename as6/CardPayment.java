@@ -58,7 +58,11 @@ public class CardPayment extends Payment {
     // TODO: Method header
     @Override
     public boolean equals(Object object) {
-        return false;
+        CardPayment cardPayment = (CardPayment)object;
+
+        return super.equals(object) && cardNumber == cardPayment.cardNumber && 
+            expiryMonth == cardPayment.expiryMonth && 
+                expiryYear == cardPayment.expiryYear;
     }
 
     // TODO: Method header

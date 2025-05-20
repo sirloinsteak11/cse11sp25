@@ -14,36 +14,43 @@ public class ElectronicPayment extends Payment {
     // TODO: Method header
     public ElectronicPayment(String transactionName, double amount,
                              long accountId, String emailAddress) {
+
+        super(transactionName, amount);
+
+        this.accountId = accountId;
+        this.emailAddress = emailAddress;
     }
 
     // TODO: Method header
     @Override
     public long getAccountId() {
-        return 0L;
+        return this.accountId;
     }
 
     // TODO: Method header
     @Override
     public String getEmailAddress() {
-        return null;
+        return this.emailAddress;
     }
 
     // TODO: Method header
     @Override
     public String getHighLevelType() {
-        return null;
+        return HIGH_LEVEL_TYPE;
     }
 
     // TODO: Method header
     @Override
     public String getType() {
-        return null;
+        return TYPE;
     }
 
     // TODO: Method header
     @Override
     public boolean equals(Object object) {
-        return false;
+        ElectronicPayment ep = (ElectronicPayment)object;
+        return super.equals(object) && accountId == ep.accountId && 
+            emailAddress.equals(ep.emailAddress);
     }
 
     // TODO: Method header

@@ -16,36 +16,44 @@ public class MobilePayment extends ElectronicPayment {
     public MobilePayment(String transactionName, double amount,
                                 long accountId, String emailAddress,
                                 String phoneNumber, int starRating) {
+
+        super(transactionName, amount, accountId, emailAddress);
+
+        this.phoneNumber = phoneNumber;
+        this.starRating = starRating;
     }
 
     // TODO: Method header
     @Override
     public String getPhoneNumber() {
-        return null;
+        return this.phoneNumber;
     }
 
     // TODO: Method header
     @Override
     public int getStarRating() {
-        return 0;
+        return this.starRating;
     }
 
     // TODO: Method header
     @Override
     public String getType() {
-        return null;
+        return TYPE;
     }
 
     // TODO: Method header
     @Override
     public boolean equals(Object object) {
-        return false;
+        MobilePayment mp = (MobilePayment)object;
+        return super.equals(object) && phoneNumber.equals(mp.phoneNumber) && 
+            starRating == mp.starRating;
     }
 
     // TODO: Method header
     @Override
     public double calculateDigitalRisk() {
-        return 0.0;
+        double starRatingNormalized = (double)starRating / MAX_STAR_RATING;
+        return getAmount() / starRatingNormalized;
     }
 
     // TODO: Method header

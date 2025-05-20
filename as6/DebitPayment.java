@@ -15,35 +15,42 @@ public class DebitPayment extends CardPayment {
                                 long cardNumber, int expiryMonth,
                                 int expiryYear, double bankBalance,
                                 double monthlyIncome) {
+
+        super(transactionName, amount, cardNumber, expiryMonth, expiryYear);
+
+        this.bankBalance = bankBalance;
+        this.monthlyIncome = monthlyIncome;
     }
 
     // TODO: Method header
     @Override
     public double getBankBalance() {
-        return 0.0;
+        return this.bankBalance;
     }
 
     // TODO: Method header
     public double getMonthlyIncome() {
-        return 0.0;
+        return this.monthlyIncome;
     }
 
     // TODO: Method header
     @Override
     public String getType() {
-        return null;
+        return TYPE;
     }
 
     // TODO: Method header
     @Override
     public boolean equals(Object object) {
-        return false;
+        DebitPayment dp = (DebitPayment)object;
+        return super.equals(object) && bankBalance == dp.bankBalance && 
+            monthlyIncome == dp.monthlyIncome;
     }
 
     // TODO: Method header
     @Override
     public double calculateCardRisk() {
-        return 0.0;
+        return (getAmount()/bankBalance) * (getAmount()/monthlyIncome);
     }
 
     // TODO: Method header
