@@ -1,7 +1,36 @@
-// TODO: File header
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:              Assignment6
+// Files:              Assignment6.java
+// Quarter:            CSE11 SPRING 2025
+//
+// Author:             DEONN ALMIROL
+// Email:              DALMIROL@UCSD.EDU
+// Instructor's Name:  BEN OCHOA
+//
+///////////////////////////////////////////////////////////////////////////////
+//                   STUDENTS WHO GET HELP COMPLETE THIS SECTION
+//                   You must fully acknowledge and credit sources of help.
+//                   Instructors and TAs do not have to be credited here,
+//                   but roommates, relatives, strangers, etc do.
+//
+// Persons:          Identify persons by name, relationship to you, and email.
+//                   Describe in detail the the ideas and help they provided.
+//
+// Online sources:   Avoid web searches to solve your problems, but if you do
+//                   search, be sure to include Web URLs and description of
+//                   of any information you find.
+//////////////////////////// 80 columns wide //////////////////////////////////
+
 import java.util.ArrayList;
 
-// TODO: Class header
+/**
+ * The main accessor of all payment and processor classes
+ * 
+ * Bugs: none afaik
+ * 
+ * @author Deonn almirol
+ */
 public class Assignment6 {
 
     /**
@@ -30,7 +59,11 @@ public class Assignment6 {
         System.out.println(']');
     }
 
-    // TODO: Method header
+    /**
+     * runs unit tests and returns false if any fail
+     * 
+     * @return whether all unit tests pass
+     */
     @SuppressWarnings("checkstyle:MagicNumber")
     public static boolean unitTests() {
         // SETUP
@@ -92,14 +125,88 @@ public class Assignment6 {
             }
         }
 
+        //  test case 2 - compareRisk
+        Payment t1p1 = proc.getPaymentList().get(1);
+        Payment t1p2 = proc.getPaymentList().get(3);
 
-        // TODO: write more test cases HERE!!!!!!
+        double riskOne = t1p1.calculateCardRisk();
+        double riskTwo = t1p2.calculateCardRisk();
 
+
+
+        int expectedResult = 0;
+        if (riskOne > riskTwo) {
+            expectedResult = 1;
+        }
+        if (riskOne == riskTwo) {
+            expectedResult = 0;
+        }
+        if (riskOne < riskTwo) {
+            expectedResult = -1;
+        }
+
+        int actualResult = PaymentProcessor.compareRisk(t1p1, t1p2);
+        if (expectedResult != actualResult) {
+            System.out.println(String
+                .format("compareRisk actual result: %d expected result: %d", 
+                expectedResult, actualResult));
+
+            return false;
+        }
+
+        // test case 3 - applyPaymentSurge 2
+        double[] originalPrices2 = new double[proc.getPaymentList().size()];
+        for (int i = 0; i < proc.getPaymentList().size(); i++) {
+            originalPrices2[i] = proc.getPaymentList().get(i).getAmount();
+        }
+
+        // Apply payment increases
+        double increaseRate2 = 2.9;
+	    int increaseIndex2 = proc.applyPaymentSurge(increaseRate2);
+
+        // Check paymentList amounts
+        for (int i = 0; i < proc.getPaymentList().size(); i++) {
+            Payment payment = proc.getPaymentList().get(i);
+            if (i != increaseIndex2 || increaseRate2 < 1) {
+                // Check that the Payment as this index is still the same
+                if (payment.getAmount() != originalPrices[i]) {
+                    // Payment has changed unexpectedly
+                    System.out.println("applyPaymentSurge 2" +
+                        " - Payment unexpectedly changed " +
+                        "at index: " + i);
+                    System.out.println(proc.getPaymentList());
+                    return false;
+                }
+            } else {
+                // Check that the Payment has the expected discounted amount
+                double actualPrice = originalPrices2[i] * increaseRate2;
+                if (payment.getAmount() != actualPrice) {
+                    System.out.println("applyPaymentSurge 2" +
+                        " - Payment does not have expected increased amount");
+                    System.out.println(payment.getAmount());
+                    System.out.println(actualPrice);
+                    System.out.println(proc.getPaymentList());
+                    return false;
+                }
+            }
+        }
+
+        // test case 4 - processPayment
+        boolean processTest = PaymentProcessor.processPayment(m1);
+        boolean expectedValue = true;
+        if (processTest != expectedValue) {
+            System.out.println("processPayment should be showing true but shows false");
+            return false;
+        }
 
         return true;
     }
 
-    // TODO: Method header
+    /**
+     * main entry point of Assignment6
+     * 
+     * @param args command line args
+     */
     public static void main(String[] args) {
         // Perform unitTests
         if(unitTests()) {
